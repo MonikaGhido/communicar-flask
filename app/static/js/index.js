@@ -1,4 +1,7 @@
-$(document).ready(function () {
+console.log("CULOOOOOOOOO");
+
+$(document).ready(function (e) {
+    e.preventDefault();
 
     let registrationData = {};
 

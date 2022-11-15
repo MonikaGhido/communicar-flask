@@ -17,11 +17,15 @@ def carRegistration():
     print("A user registration has arrived...")
 
     data = request
-    if ( data.json == None):
+    if data.json is None:
         print("Error - empty body or incorrect syntax ")
-
+    
     user_registration.append(data.json)
+    print(user_registration)
 
+    """data = json.loads(list(request.form.keys())[0])
+    print(data)
+    user_registration.append(data) """
 
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
