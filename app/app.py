@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
 import json
-import time
-import uuid
+
+from flask import Flask, render_template, request
+
+user_registration = []
 
 app = Flask(__name__)
 
@@ -11,22 +12,18 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    print("ciao")
-    survey_id = f"{uuid.uuid4()}_{int(time.time())}"
+@app.route('/car_registration', methods=['POST'])
+def carRegistration():
+    print("A user registration has arrived...")
 
-    with open(f'./survey_data/{survey_id}.json', 'w') as fp:
-        data = json.loads(list(request.form.keys())[0])
-        print(data)
-        json.dump(data, fp)
+    data = request
+    if ( data.json == None):
+        print("Error - empty body or incorrect syntax ")
 
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+    user_registration.append(data.json)
 
 
-@app.route('/thanks.html', methods=['GET'])
-def thanks():
-    return render_template("thanks.html")
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 if __name__ == '__main__':
