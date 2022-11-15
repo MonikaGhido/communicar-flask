@@ -13,6 +13,9 @@ $(document).ready(function (e) {
     });
 
     let jsonStr = JSON.stringify(registrationData);
+    console.log("Devo fare la post");
+    console.log(jsonStr);
+
     $.post("car_registration", jsonStr);
 
     // redirect to thanks.html landing page

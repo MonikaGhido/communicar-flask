@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CommuniCar</title>
     <link rel="stylesheet" type="text/css" href="./static/css/style.css">
 
@@ -12,17 +16,19 @@
 </head>
 
 <body>
+<script src="./static/js/index.js"></script>
+
 <div class="main">
     <input type="checkbox" id="chk" aria-hidden="true">
 
     <div class="signup">
-        <form>
+        <form action="car_registration" method="post">
             <label for="chk" aria-hidden="true">CommuniCar</label>
             <input id="nameInput" type="text" name="txt" placeholder="Name & Surname" required="on">
             <input id="licensePlateInput" type="text" name="txt" placeholder="Car License Plate" required="on">
             <input id="emailInput" type="email" name="email" placeholder="Email" required="on">
             <input id="passwordInput" type="password" name="pswd" placeholder="Password" required="on">
-            <button id="signUpBtn" type="submit">Sign up</button>
+            <button id="signUpBtn">Sign up</button> <!-- type="submit" -->
         </form>
     </div>
 
@@ -36,7 +42,7 @@
     </div>
 </div>
 
-<script src="../static/js/index.js"></script>
+
 
 </body>
 </html>
