@@ -1,8 +1,9 @@
-import json
 
-from flask import Flask, render_template, request
+from json import JSONDecodeError
 
-user_registration = []
+from flask import Flask, render_template, request, Response
+
+userRegistrationList = [] #Rappresenta il dataset del file Sql
 
 app = Flask(__name__)
 
@@ -14,20 +15,38 @@ def index():
 
 @app.route('/car_registration', methods=['POST'])
 def carRegistration():
+
     print("A user registration has arrived...")
 
-    data = request
-    if data.json is None:
-        print("Error - empty body or incorrect syntax ")
-    
-    user_registration.append(data.json)
-    print(user_registration)
 
-    """data = json.loads(list(request.form.keys())[0])
-    print(data)
-    user_registration.append(data) """
+    try:
 
-    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+        #ottengo dizionario
+        userRegistrationModel = request.get_json(force=True)
+
+
+        #controllo se la registrazione è già presente
+        for user in userRegistrationList:
+            if(userRegistrationModel["name"] == user["name"] and userRegistrationModel["license_plate"] == user["license_plate"]):
+                print('\033[91m' + "User Registration already exists " + '\033[0m')
+                return {'error ': " User Registraion already exists "}, 409
+
+        #aggiorno il database
+        userRegistrationList.append(userRegistrationModel)
+        print('\033[92m' + "User Registration Created" + '\033[0m' )
+
+        print("Data:" + str(userRegistrationList))
+
+        return Response(status=201, content_type='application/json')
+
+    except JSONDecodeError:
+        print('\033[91m' + "Error Invalid JSON ! Check the request " + '\033[0m' )
+        return {'error ': " Invalid JSON ! Check the request "}, 400
+
+    except Exception as e:
+        print('\033[91m' +"error :  Generic Internal Server Error ! Reason : " + str(e) + '\033[0m')
+        return {'error ': " Generic Internal Server Error ! Reason : " + str(e)}, 500
+
 
 
 if __name__ == '__main__':
