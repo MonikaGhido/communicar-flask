@@ -13,6 +13,7 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    print("ciao")
     survey_id = f"{uuid.uuid4()}_{int(time.time())}"
 
     with open(f'./survey_data/{survey_id}.json', 'w') as fp:
